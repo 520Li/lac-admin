@@ -40,4 +40,9 @@ public class HomeServiceImpl implements HomeService {
         }
 
     }
+
+    @Override
+    public Menu getMenuById(Long id) {
+        return sqlManager.single(Menu.class, id);
+    }
 }

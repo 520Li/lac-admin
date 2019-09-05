@@ -1,6 +1,6 @@
 package com.admin.base.domain;
 
-import com.admin.base.annotation.Field;
+import com.admin.base.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -9,7 +9,6 @@ import org.beetl.sql.core.TailBean;
 import org.beetl.sql.core.annotatoin.AssignID;
 import org.beetl.sql.core.annotatoin.Table;
 import org.beetl.sql.core.annotatoin.Version;
-import org.beetl.sql.core.orm.OrmQuery;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,25 +25,35 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "lac.lw_user")
-public class User extends TailBean implements Serializable {
+@LayuiTable(url = "system/user/list")
+@TableType
+public class User implements Serializable {
 
-    /* 雪花算法随机ID */
+    /* 雪花算法ID */
     @AssignID("simple")
     /* 防止大整数精度丢失 */
     @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
+
     @JsonSerialize(using = ToStringSerializer.class)
     private Long userDid;
 
-    @Field(field = "userName", title = "账号")
+    @Field(title = "账号")
+    @Query(name = "账号", method = Method.LIKE)
     private String userName;
-    @Field(field = "userNickName", title = "用户名")
-    private String userNickname;
+
+    @Field(title = "用户名")
+    @Query(name = "用户名", method = Method.LIKE)
+    private String userNickName;
+
     @JsonIgnore
     private String userPass;
 
+    @Field(title = "状态")
     private Integer userState;
-    @Field(field = "userCreateTime", title = "创建时间")
+
+
+    @Field(title = "创建时间")
     private Date userCreateTime;
 
     /* 乐观锁 */

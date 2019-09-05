@@ -62,10 +62,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public PageResult<User> pageUser(User user, QueryVo vo) {
-        //PageQuery<User> query = new PageQuery<>(vo.getPage(), vo.getLimit());
-        //sqlManager.pageQuery("account.user.getUserPage", User.class, query);
-        //return new PageResult<>(query.getTotalRow(), query.getList());
-        return new PageResult<>();
+        PageQuery<User> query = new PageQuery<>(vo.getPage(), vo.getLimit());
+        query.setParas(user);
+        sqlManager.pageQuery("account.user.getUserPage", User.class, query);
+        return new PageResult<>(query.getTotalRow(), query.getList());
     }
 
     /**

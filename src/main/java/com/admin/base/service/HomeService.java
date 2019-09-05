@@ -15,4 +15,6 @@ import java.util.List;
 public interface HomeService {
 
     List<Menu> getMenus();
+
+    Menu getMenuById(Long id);
 }
