@@ -25,18 +25,19 @@
 
 <!-- 获取表格尾部操作列 -->
 @ToolbarTag("User"){}
-<!--
-<script type="text/html" id="user-table-bar">
+
+<!--<script type="text/html" id="user-table-bar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-xs" lay-event="reset">重置密码</a>
-</script>
--->
+</script>-->
 
-<!-- 表格状态列 -->
-<script type="text/html" id="user-tpl-state">
+<!-- 表格（开关）状态列 -->
+@SwitchTag("User"){}
+
+<!--<script type="text/html" id="user-tpl-state">
     <input type="checkbox" lay-filter="user-tpl-state" value="{{d.userId}}" lay-skin="switch" lay-text="正常|锁定"
            {{d.userState==0?'checked':''}}/>
-</script>
+</script>-->
 
 
 <script>
@@ -126,9 +127,9 @@
         });
 
         // 修改user状态
-        form.on('switch(user-tpl-state)', function (obj) {
+        form.on('switch()', function (obj) {
             layer.load(2);
-            $.post('system/user/updateState.do', {
+            $.post('system/user/updateState.do?clazz=User', {
                 userId: obj.elem.value,
                 state: obj.elem.checked ? 0 : 1
             }, function (data) {

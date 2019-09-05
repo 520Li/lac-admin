@@ -25,7 +25,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "lac.lw_user")
-@LayuiTable(url = "system/user/list")
+@LayuiTable
 @TableType
 public class User implements Serializable {
 
@@ -49,15 +49,16 @@ public class User implements Serializable {
     @JsonIgnore
     private String userPass;
 
-    @Field(title = "状态")
-    private Integer userState;
-
-
     @Field(title = "创建时间")
     private Date userCreateTime;
 
+
+    @Field(title = "状态", type = FieldType.SWITCH)
+    private Integer userState;
+
+
     /* 乐观锁 */
-    @Version
+    //@Version
     private Integer userVersion;
 
 }

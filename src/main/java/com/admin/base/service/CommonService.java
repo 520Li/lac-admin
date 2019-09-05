@@ -8,4 +8,6 @@ import java.util.Map;
 public interface CommonService {
 
     public PageResult getCommonPage(QueryVo vo) throws Exception;
+
+    void updateStatus(Long userId, Integer state, String clazz) throws Exception;
 }

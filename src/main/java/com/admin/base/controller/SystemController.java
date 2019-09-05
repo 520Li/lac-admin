@@ -67,8 +67,8 @@ public class SystemController {
 
     @PostMapping("/updateState.do")
     @ResponseBody
-    public PageResult updateState(Long userId, Integer state) {
-        userService.updateStatus(userId, state);
+    public PageResult updateState(Long userId, Integer state, String clazz) throws Exception {
+        commonService.updateStatus(userId, state, clazz);
         return new PageResult(200, "更新状态成功");
     }
 

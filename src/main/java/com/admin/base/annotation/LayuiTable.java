@@ -14,13 +14,18 @@ public @interface LayuiTable {
     String elem() default "common-table";
 
     /**
-     * 数据表格请求后台数据url
+     * 数据表格请求后台数据url(通用url)
      */
-    String url();
+    String url() default "system/user/list";
 
     /**
      * 是否开启分页
      */
     boolean page() default true;
+
+    /**
+     * 列头 和 列尾工具栏
+     */
+    //TableType value();
 
 }

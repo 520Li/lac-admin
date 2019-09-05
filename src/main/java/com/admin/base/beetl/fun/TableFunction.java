@@ -1,9 +1,6 @@
 package com.admin.base.beetl.fun;
 
-import com.admin.base.annotation.Field;
-import com.admin.base.annotation.Layui;
-import com.admin.base.annotation.LayuiTable;
-import com.admin.base.annotation.TableType;
+import com.admin.base.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.beetl.core.Context;
 import org.beetl.core.Function;
@@ -18,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 /**
- * ClassName: UserFunction <br/>
+ * 输出一个Layui数据表格 <br/>
  *
  * @author lac
  * @version 1.0
@@ -33,7 +30,7 @@ public class TableFunction implements Function {
     private String clazzPath;
 
     /**
-     * @param paras 全类名
+     * @param paras 实体类类名
      * @param ctx
      * @return
      */
@@ -62,8 +59,10 @@ public class TableFunction implements Function {
                         Field field = info.getAnnotation(Field.class);
                         if (field != null) {
                             Layui.Col col = layui.getCol();
+                            // TODO 根据字段类型添加不同样式
                             col.setField(info.getName());
                             col.setTitle(field.title());
+                            style(col, field.type());
                             layui.add(col);
                         }
                     });
@@ -86,6 +85,20 @@ public class TableFunction implements Function {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void style(Layui.Col col, FieldType type) {
+        switch (type) {
+            case TEXT:
+                break;
+            case EDIT_TEXT:
+                break;
+            case SWITCH:
+                col.setTemplet("#" + col.getField() + "_switch");
+                break;
+            case SELECT:
+                break;
+        }
     }
 
 

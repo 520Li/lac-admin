@@ -15,7 +15,22 @@ public @interface Field {
 
     /**
      * column名称
+     *
      * @return
      */
     String title();
+
+    /**
+     * 是否在数据表格显示
+     * @return
+     */
+    @Deprecated
+    boolean display() default true;
+
+    /**
+     * column类型 （默认普通文本）
+     *
+     * @return
+     */
+    FieldType type() default FieldType.TEXT;
 }

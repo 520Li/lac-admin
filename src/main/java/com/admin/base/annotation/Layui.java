@@ -95,6 +95,11 @@ public class Layui {
          */
         private String toolbar;
 
+        /**
+         * 列模板
+         */
+        private String templet;
+
 
     }
 

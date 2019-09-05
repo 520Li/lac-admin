@@ -1,14 +1,19 @@
 getCommonPage
 ===
-    select 
-        @pageTag(){
+        select 
         *
-        @}
         from #text(tableName)#
         where 1 = 1
-        @for(key in keys){
-          and #text(key)# = #map[key]# 
+        @for(val in list){
+          and #text(val)# 
         @}
-        @pageIgnoreTag(){
-        order by user_create_time desc
+        
+getCommonPage$count
+===
+        select 
+        count(1)
+        from #text(tableName)#
+        where 1 = 1
+        @for(val in list){
+          and #text(val)# 
         @}

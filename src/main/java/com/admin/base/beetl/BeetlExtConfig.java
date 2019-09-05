@@ -3,6 +3,7 @@ package com.admin.base.beetl;
 import com.admin.base.beetl.fun.MenuFunction;
 import com.admin.base.beetl.fun.TableFunction;
 import com.admin.base.beetl.tag.QueryTag;
+import com.admin.base.beetl.tag.SwitchTag;
 import com.admin.base.beetl.tag.ToolbarTag;
 import com.ibeetl.starter.BeetlTemplateCustomize;
 import org.beetl.core.GroupTemplate;
@@ -49,6 +50,11 @@ public class BeetlExtConfig {
                 groupTemplate.registerTagFactory("ToolbarTag", new TagFactory() {
                     public Tag createTag() {
                         return applicationContext.getBean(ToolbarTag.class);
+                    }
+                });
+                groupTemplate.registerTagFactory("SwitchTag", new TagFactory() {
+                    public Tag createTag() {
+                        return applicationContext.getBean(SwitchTag.class);
                     }
                 });
             }
