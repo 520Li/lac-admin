@@ -1,8 +1,9 @@
 package com.admin.base.beetl;
 
 import com.admin.base.beetl.fun.MenuFunction;
-import com.admin.base.beetl.fun.UserFunction;
-import com.admin.base.beetl.tag.MenuTag;
+import com.admin.base.beetl.fun.TableFunction;
+import com.admin.base.beetl.tag.QueryTag;
+import com.admin.base.beetl.tag.ToolbarTag;
 import com.ibeetl.starter.BeetlTemplateCustomize;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.tag.Tag;
@@ -25,7 +26,7 @@ public class BeetlExtConfig {
     @Autowired
     private MenuFunction menuFunction;
     @Autowired
-    private UserFunction userFunction;
+    private TableFunction tableFunction;
 
     @Autowired
     ApplicationContext applicationContext;
@@ -34,16 +35,22 @@ public class BeetlExtConfig {
     public BeetlTemplateCustomize beetlTemplateCustomize() {
         return new BeetlTemplateCustomize() {
             public void customize(GroupTemplate groupTemplate) {
-                // 注册一个扩展函数
+                // 注册扩展函数
                 groupTemplate.registerFunction("Menu", menuFunction);
-                groupTemplate.registerFunction("UserField", userFunction);
+                groupTemplate.registerFunction("Table", tableFunction);
 
-                // 注册一个标签函数
-                /*groupTemplate.registerTagFactory("MenuTag", new TagFactory() {
+
+                // 注册标签函数
+                groupTemplate.registerTagFactory("QueryTag", new TagFactory() {
                     public Tag createTag() {
-                        return applicationContext.getBean(MenuTag.class);
+                        return applicationContext.getBean(QueryTag.class);
                     }
-                });*/
+                });
+                groupTemplate.registerTagFactory("ToolbarTag", new TagFactory() {
+                    public Tag createTag() {
+                        return applicationContext.getBean(ToolbarTag.class);
+                    }
+                });
             }
 
         };

@@ -32,6 +32,9 @@ public class MenuFunction implements Function {
     @Override
     public Object call(Object[] paras, Context ctx) {
         Long id = Long.parseLong(paras[0] + "");
+
+        //TODO 获取用户权限菜单
+
         List<Menu> menus = sqlManager.lambdaQuery(Menu.class).andEq(Menu::getMenuParent, id).andEq(Menu::getMenuState, 1).asc(Menu::getMenuSort).select();
         return menus;
     }

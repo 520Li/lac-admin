@@ -10,11 +10,11 @@ getUserPage
     @}
     from lw_user
     where 1 = 1
-    @if(!isEmpty(user_name)){
+    @if(!isBlank(userName)){
         and user_name like "%"#userName#"%"
     @}
-    @if(!isEmpty(user_nickname)){
-        and user_nickname like "%"#userNickname#"%"
+    @if(!isBlank(userNickName)){
+        and user_nick_name like "%"#userNickName#"%"
     @}
     @pageIgnoreTag(){
     order by user_create_time desc
