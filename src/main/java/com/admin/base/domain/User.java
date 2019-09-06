@@ -26,7 +26,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "lac.lw_user")
 @LayuiTable
-@TableType
 public class User implements Serializable {
 
     /* 雪花算法ID */

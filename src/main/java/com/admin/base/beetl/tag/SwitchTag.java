@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.util.stream.Stream;
 
 /**
- * ClassName: SwitchTag <br/>
+ * 状态栏标签 <br/>
  *
  * @author lac
  * @version 1.0

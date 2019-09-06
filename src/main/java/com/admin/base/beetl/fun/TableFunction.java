@@ -44,13 +44,9 @@ public class TableFunction implements Function {
             Layui layui = new Layui("#" + table.elem(), table.url() + "?clazz=" + clazz.getSimpleName(), table.page());
 
             // 2  表格头部序列
-            TableType tableType = clazz.getAnnotation(TableType.class);
+            TableType tableType = table.value();
             Layui.Col col1 = layui.getCol();
-            if (tableType == null) {
-                col1.setType("numbers");
-            } else {
-                col1.setType(tableType.type());
-            }
+            col1.setType(tableType.type());
             layui.add(col1);
 
             // 3  表格内容
@@ -59,9 +55,9 @@ public class TableFunction implements Function {
                         Field field = info.getAnnotation(Field.class);
                         if (field != null) {
                             Layui.Col col = layui.getCol();
-                            // TODO 根据字段类型添加不同样式
                             col.setField(info.getName());
                             col.setTitle(field.title());
+                            // TODO 根据字段类型添加不同样式
                             style(col, field.type());
                             layui.add(col);
                         }
@@ -69,13 +65,13 @@ public class TableFunction implements Function {
 
 
             // 4  表格尾部工具栏
-            if (tableType != null) {
-                Layui.Col col = layui.getCol();
-                col.setAlign(tableType.align());
-                col.setToolbar("#" + tableType.toolbar());
-                col.setTitle(tableType.title());
-                layui.add(col);
-            }
+            Layui.Col col = layui.getCol();
+            col.setAlign(tableType.align());
+            col.setToolbar("#" + tableType.toolbar());
+            col.setTitle(tableType.title());
+            layui.add(col);
+
+
             // 5  返回 数据表格id 和 数据表头
             Map map = new HashMap();
             map.put("tableId", table.elem());

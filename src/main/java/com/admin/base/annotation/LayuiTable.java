@@ -26,6 +26,6 @@ public @interface LayuiTable {
     /**
      * 列头 和 列尾工具栏
      */
-    //TableType value();
+    TableType value() default @TableType;
 
 }

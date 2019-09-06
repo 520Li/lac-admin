@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 自定义 标签 <br/>
+ * 查询标签 <br/>
  *
  * @author lac
  * @version 1.0
