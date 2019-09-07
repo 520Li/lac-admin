@@ -1,5 +1,5 @@
 <!-- 获取数据表格对象 -->
-@ var userMap = Table("User");
+@ var map = Table(clazz);
 
 <div class="layui-card">
     <div class="layui-card-header">
@@ -12,27 +12,30 @@
     <div class="layui-card-body">
         <div id="query" class="layui-form toolbar">
             <!-- 获取查询项 -->
-            @QueryTag("User"){}
+            @QueryTag(clazz){}
 
             <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
             <button id="user-btn-add" class="layui-btn icon-btn" lay-tips="新用户密码为1"><i class="layui-icon">&#xe654;</i>添加
             </button>
         </div>
 
-        <table class="layui-table" id="${userMap.tableId}" lay-filter="${userMap.tableId}"></table>
+        <table class="layui-table" id="${map.tableId}" lay-filter="${map.tableId}"></table>
     </div>
 </div>
 
 <!-- 获取表格尾部操作列 -->
-@ToolbarTag("User"){}
-
-<!--<script type="text/html" id="user-table-bar">
+<script type="text/html" id="${map.toolbarId}">
+    @if(array.contain(resources,'edit')){
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    @}
+    @if(array.contain(resources,'reset')){
     <a class="layui-btn layui-btn-xs" lay-event="reset">重置密码</a>
-</script>-->
+    @}
+</script>
 
-<!-- 表格（开关）状态列 -->
-@SwitchTag("User"){}
+@ var ids = [];
+<!-- 表格状态列 -->
+@SwitchTag(clazz){}
 
 <!--<script type="text/html" id="user-tpl-state">
     <input type="checkbox" lay-filter="user-tpl-state" value="{{d.userId}}" lay-skin="switch" lay-text="正常|锁定"
@@ -40,8 +43,9 @@
 </script>-->
 
 
-<script>
 
+<script>
+    console.log(${ids});
     layui.use(['form', 'table', 'util', 'admin', 'element'], function () {
         var form = layui.form;
         var table = layui.table;
@@ -53,7 +57,7 @@
         form.render('select');
 
         // 渲染表格
-        table.render(${userMap.data});
+        table.render(${map.data});
         /*table.render({
             elem: '#user-table',
             url: 'system/user/list.do',
@@ -78,7 +82,7 @@
         });
 
         // 工具条点击事件
-        table.on("tool(${userMap.tableId})", function (obj) {
+        table.on("tool(${map.tableId})", function (obj) {
             var data = obj.data;
             console.log(obj.data);
             var layEvent = obj.event;
@@ -89,7 +93,7 @@
                 layer.confirm('确定重置此用户的密码吗？', function (i) {
                     layer.close(i);
                     layer.load(2);
-                    $.post('system/user/restPsw.do', {
+                    $.post('system/common/restPsw.do', {
                         userId: obj.data.userId
                     }, function (data) {
                         layer.closeAll('loading');
@@ -109,9 +113,9 @@
             admin.putTempData('t_user', data);
             admin.popupCenter({
                 title: title,
-                path: 'system/user/editForm',
+                path: 'system/common/editForm',
                 finish: function () {
-                    table.reload('${userMap.tableId}', {});
+                    table.reload('${map.tableId}', {});
                 }
             });
         };
@@ -123,14 +127,14 @@
                 query[obj.id] = obj.value.trim();
             })
             console.log(query);
-            table.reload('${userMap.tableId}', {where: query});
+            table.reload('${map.tableId}', {where: query});
         });
 
-        // 修改user状态
+        // 修改状态
         form.on('switch()', function (obj) {
             layer.load(2);
-            $.post('system/user/updateState.do?clazz=User', {
-                userId: obj.elem.value,
+            $.post('system/common/updateState.do?clazz=${clazz}', {
+                id: obj.elem.value,
                 state: obj.elem.checked ? 0 : 1
             }, function (data) {
                 console.log(data);

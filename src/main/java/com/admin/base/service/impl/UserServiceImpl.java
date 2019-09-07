@@ -75,10 +75,10 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public boolean LoginUser(User user) {
+    public User LoginUser(User user) {
         User single = sqlManager.lambdaQuery(User.class).andEq(User::getUserName, user.getUserName())
                 .andEq(User::getUserPass, user.getUserPass()).single();
-        return single != null;
+        return single;
     }
 
     /**

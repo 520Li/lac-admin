@@ -1,4 +1,4 @@
-package com.admin.base.annotation;
+package com.admin.base.layui.annos;
 
 import java.lang.annotation.*;
 
@@ -11,12 +11,12 @@ public @interface LayuiTable {
     /**
      * 数据表格id (如果一个页面多个表格需要指定id)
      */
-    String elem() default "common-table";
+    String elem();
 
     /**
      * 数据表格请求后台数据url(通用url)
      */
-    String url() default "system/user/list";
+    String url() default "system/common/list";
 
     /**
      * 是否开启分页
@@ -26,6 +26,6 @@ public @interface LayuiTable {
     /**
      * 列头 和 列尾工具栏
      */
-    TableType value() default @TableType;
+    TableType value();
 
 }

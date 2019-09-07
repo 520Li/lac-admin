@@ -1,10 +1,13 @@
 package com.admin.base.beetl.fun;
 
-import com.admin.base.annotation.*;
+import com.admin.base.layui.*;
+import com.admin.base.layui.annos.Field;
+import com.admin.base.layui.annos.LayuiTable;
+import com.admin.base.layui.annos.TableType;
+import com.admin.base.layui.enums.FieldType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.beetl.core.Context;
 import org.beetl.core.Function;
-import org.beetl.sql.core.SQLManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 /**
  * 输出一个Layui数据表格 <br/>
@@ -67,7 +69,7 @@ public class TableFunction implements Function {
             // 4  表格尾部工具栏
             Layui.Col col = layui.getCol();
             col.setAlign(tableType.align());
-            col.setToolbar("#" + tableType.toolbar());
+            col.setToolbar("#" + tableType.toolbarId());
             col.setTitle(tableType.title());
             layui.add(col);
 
@@ -76,6 +78,7 @@ public class TableFunction implements Function {
             Map map = new HashMap();
             map.put("tableId", table.elem());
             map.put("data", objectMapper.writeValueAsString(layui));
+            map.put("toolbarId", tableType.toolbarId());
             return map;
         } catch (Exception e) {
             e.printStackTrace();

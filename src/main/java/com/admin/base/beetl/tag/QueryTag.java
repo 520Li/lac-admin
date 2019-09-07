@@ -1,19 +1,12 @@
 package com.admin.base.beetl.tag;
 
-import com.admin.base.annotation.Query;
-import com.admin.base.annotation.QueryType;
-import com.admin.base.domain.Menu;
-import com.admin.base.service.HomeService;
+import com.admin.base.layui.annos.Query;
 import org.beetl.core.tag.Tag;
-import org.beetl.sql.core.SQLManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 查询标签 <br/>

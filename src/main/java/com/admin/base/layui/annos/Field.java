@@ -1,4 +1,6 @@
-package com.admin.base.annotation;
+package com.admin.base.layui.annos;
+
+import com.admin.base.layui.enums.FieldType;
 
 import java.lang.annotation.*;
 

@@ -1,24 +1,23 @@
 package com.admin.base.service.impl;
 
-import com.admin.base.annotation.FieldType;
-import com.admin.base.annotation.Method;
-import com.admin.base.annotation.Query;
+import com.admin.base.domain.Resource;
 import com.admin.base.domain.User;
+import com.admin.base.layui.enums.FieldType;
+import com.admin.base.layui.enums.Method;
+import com.admin.base.layui.annos.Query;
 import com.admin.base.service.CommonService;
 import com.admin.base.util.PageResult;
 import com.admin.base.util.QueryVo;
 import org.apache.commons.lang.StringUtils;
 import org.beetl.sql.core.SQLManager;
 import org.beetl.sql.core.annotatoin.Table;
-import org.beetl.sql.core.engine.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.annotation.Annotation;
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,8 @@ public class CommonServiceImpl implements CommonService {
     private SQLManager sqlManager;
     @Value("${clazz.path}")
     private String clazzPath;
+    @Autowired
+    private HttpSession session;
 
     @Override
     public PageResult getCommonPage(QueryVo vo) throws Exception {
@@ -55,24 +56,39 @@ public class CommonServiceImpl implements CommonService {
     /**
      * 更改状态
      *
-     * @param userId
+     * @param id
      * @param state
      */
     @Override
-    public void updateStatus(Long userId, Integer state, String clazz) throws Exception {
+    public void updateStatus(Long id, Integer state, String clazz) throws Exception {
         Class<?> className = Class.forName(clazzPath + clazz);
         Field[] fields = className.getDeclaredFields();
         Map map = new HashMap();
-        map.put(fields[0].getName(), userId);
+        map.put(fields[0].getName(), id);
 
         for (Field f : fields) {
-            com.admin.base.annotation.Field anno = f.getAnnotation(com.admin.base.annotation.Field.class);
+            com.admin.base.layui.annos.Field anno = f.getAnnotation(com.admin.base.layui.annos.Field.class);
             if (anno != null && anno.type().equals(FieldType.SWITCH)) {
                 map.put(f.getName(), state);
                 break;
             }
         }
         sqlManager.updateTemplateById(className, map);
+    }
+
+    /**
+     * 获取菜单按钮权限
+     *
+     * @param
+     * @return
+     */
+    @Override
+    public List<Resource> getResourceByUser(Long vid) {
+        User user = (User) session.getAttribute("login_user");
+        Map map = new HashMap();
+        map.put("user", user);
+        map.put("menuId", vid);
+        return sqlManager.select("account.common.getResourcesByUser", Resource.class, map);
     }
 
     /**
@@ -155,8 +171,14 @@ public class CommonServiceImpl implements CommonService {
             case LESS:
                 query.andLess(fieldName, obj);
                 break;
+            case LESSEQ:
+                query.andLessEq(fieldName, obj);
+                break;
             case MORE:
                 query.andGreat(fieldName, obj);
+                break;
+            case MOREEQ:
+                query.andGreatEq(fieldName, obj);
                 break;
         }
         return query;
