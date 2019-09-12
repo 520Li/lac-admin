@@ -1,6 +1,4 @@
-package com.admin.base.annotation;
-
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
+package com.admin.base.layui.enums;
 
 /**
  * 数据表格column字段类型 <br/>

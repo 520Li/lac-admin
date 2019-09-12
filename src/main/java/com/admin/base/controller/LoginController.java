@@ -39,9 +39,10 @@ public class LoginController {
     public String index(HttpSession session, ModelMap map, User user) {
         try {
             //TODO 账号密码校验
-            boolean isExist = userService.LoginUser(user);
-            if (isExist) {
-                session.setAttribute("login_user", user);
+            User isExist = userService.LoginUser(user);
+            if (isExist != null) {
+                isExist.setUserPass(null);
+                session.setAttribute("login_user", isExist);
                 session.setMaxInactiveInterval(5 * 60);
                 return "{\"flag\":true}";
             } else {

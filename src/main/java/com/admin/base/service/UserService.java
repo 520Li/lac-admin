@@ -23,7 +23,7 @@ public interface UserService {
 
     public PageResult<User> pageUser(User template, QueryVo vo);
 
-    public boolean LoginUser(User user);
+    public User LoginUser(User user);
 
     void restPsw(Long userId);
 

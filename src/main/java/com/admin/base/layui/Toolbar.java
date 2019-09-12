@@ -1,4 +1,4 @@
-package com.admin.base.annotation;
+package com.admin.base.layui;
 
 /**
  *

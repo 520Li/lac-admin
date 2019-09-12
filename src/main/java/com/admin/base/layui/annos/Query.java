@@ -1,4 +1,7 @@
-package com.admin.base.annotation;
+package com.admin.base.layui.annos;
+
+import com.admin.base.layui.enums.Method;
+import com.admin.base.layui.enums.QueryType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
