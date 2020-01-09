@@ -34,7 +34,7 @@ public class SwitchTag extends Tag {
                     String switchId = f.getName() + "_switch";
                     sb.append("<script type=\"text/html\" id=\"" + switchId + "\">\n" +
                             "    <input type=\"checkbox\" lay-filter=\"" + f.getName() + "_switch" + "\" value=\"{{d." + fields[0].getName() + "}}\" lay-skin=\"switch\" lay-text=\"正常|锁定\"\n" +
-                            "           {{d." + f.getName() + "==0?'checked':''}}/>\n" +
+                            "           {{d." + f.getName() + "=='01'?'checked':''}}/>\n" +
                             "</script>");
                 }
             }

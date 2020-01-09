@@ -67,11 +67,13 @@ public class TableFunction implements Function {
 
 
             // 4  表格尾部工具栏
-            Layui.Col col = layui.getCol();
-            col.setAlign(tableType.align());
-            col.setToolbar("#" + tableType.toolbarId());
-            col.setTitle(tableType.title());
-            layui.add(col);
+            if (tableType.toolbar()) {
+                Layui.Col col = layui.getCol();
+                col.setAlign(tableType.align());
+                col.setToolbar("#" + tableType.toolbarId());
+                col.setTitle(tableType.title());
+                layui.add(col);
+            }
 
 
             // 5  返回 数据表格id 和 数据表头

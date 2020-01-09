@@ -1,5 +1,8 @@
 package com.admin.base.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -16,14 +19,13 @@ import java.util.Date;
  * @date 2019/9/7 0007 - 12:23
  */
 @Data
-@Table(name = "lac.lw_resource")
+@TableName("resource")
 public class Resource {
 
-    @AssignID("simple")
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long resourceId;
+    @TableId(type = IdType.UUID)
+    private String resourceId;
     private String resourceName;
     private String resourceComment;
-    private Date resourceCreateTime;
-    private Integer resourceVersion;
+    private Date createTime;
+    private Date updateTime;
 }
