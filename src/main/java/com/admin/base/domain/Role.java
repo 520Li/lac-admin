@@ -28,11 +28,11 @@ public class Role {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long roleId;
 
-    @Field(title = "角色名称")
+    @Field("角色名称")
     @Query(name = "角色名称")
     private String roleName;
 
-    @Field(title = "创建时间")
+    @Field("创建时间")
     private Date roleCreateTime;
 
     private Integer roleVersion;

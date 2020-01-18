@@ -58,7 +58,7 @@ public class TableFunction implements Function {
                         if (field != null) {
                             Layui.Col col = layui.getCol();
                             col.setField(info.getName());
-                            col.setTitle(field.title());
+                            col.setTitle(field.value());
                             // TODO 根据字段类型添加不同样式
                             style(col, field.type());
                             layui.add(col);

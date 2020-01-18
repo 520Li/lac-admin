@@ -20,10 +20,11 @@ public @interface Field {
      *
      * @return
      */
-    String title();
+    String value();
 
     /**
      * 是否在数据表格显示
+     *
      * @return
      */
     @Deprecated
