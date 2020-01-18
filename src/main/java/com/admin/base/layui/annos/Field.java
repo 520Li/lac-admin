@@ -30,10 +30,16 @@ public @interface Field {
     @Deprecated
     boolean display() default true;
 
+
+    String source() default "standard";
+
+
     /**
      * column类型 （默认普通文本）
      *
      * @return
      */
     FieldType type() default FieldType.TEXT;
+
+
 }

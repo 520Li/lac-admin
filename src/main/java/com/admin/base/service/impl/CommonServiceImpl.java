@@ -1,5 +1,6 @@
 package com.admin.base.service.impl;
 
+import com.admin.base.dao.ResourceMapper;
 import com.admin.base.domain.Resource;
 import com.admin.base.domain.User;
 import com.admin.base.layui.enums.FieldType;
@@ -26,13 +27,20 @@ import java.util.Map;
 @Transactional
 public class CommonServiceImpl implements CommonService {
 
-    @Autowired
-    private SQLManager sqlManager;
     @Value("${clazz.path}")
     private String clazzPath;
     @Autowired
+    private SQLManager sqlManager;
+    @Autowired
     private HttpSession session;
 
+    /**
+     * 公共分页查询方法
+     *
+     * @param vo
+     * @return
+     * @throws Exception
+     */
     @Override
     public PageResult getCommonPage(QueryVo vo) throws Exception {
         Class<?> clazz = Class.forName(clazzPath + vo.getClazz());
@@ -43,7 +51,6 @@ public class CommonServiceImpl implements CommonService {
         query.setPara("list", list);
         sqlManager.pageQuery("account.common.getCommonPage", clazz, query);
         return new PageResult(query.getTotalRow(), query.getList());*/
-
         //方式二：动态拼接
         org.beetl.sql.core.query.Query<?> query = getFilter(clazz, vo.getMap());
         long count = query.count();
@@ -60,12 +67,11 @@ public class CommonServiceImpl implements CommonService {
      * @param state
      */
     @Override
-    public void updateStatus(Long id, Integer state, String clazz) throws Exception {
+    public void updateStatus(String id, String state, String clazz) throws Exception {
         Class<?> className = Class.forName(clazzPath + clazz);
         Field[] fields = className.getDeclaredFields();
         Map map = new HashMap();
         map.put(fields[0].getName(), id);
-
         for (Field f : fields) {
             com.admin.base.layui.annos.Field anno = f.getAnnotation(com.admin.base.layui.annos.Field.class);
             if (anno != null && anno.type().equals(FieldType.SWITCH)) {
@@ -76,20 +82,6 @@ public class CommonServiceImpl implements CommonService {
         sqlManager.updateTemplateById(className, map);
     }
 
-    /**
-     * 获取菜单按钮权限
-     *
-     * @param
-     * @return
-     */
-    @Override
-    public List<Resource> getResourceByUser(Long vid) {
-        User user = (User) session.getAttribute("login_user");
-        Map map = new HashMap();
-        map.put("user", user);
-        map.put("menuId", vid);
-        return sqlManager.select("account.common.getResourcesByUser", Resource.class, map);
-    }
 
     /**
      * 动态拼接条件
@@ -160,7 +152,6 @@ public class CommonServiceImpl implements CommonService {
      * @return
      */
     private org.beetl.sql.core.query.Query<?> append(org.beetl.sql.core.query.Query<?> query, String fieldName, Method method, Object obj) {
-        StringBuilder sb = new StringBuilder();
         switch (method) {
             case EQUALS:
                 query.andEq(fieldName, obj);

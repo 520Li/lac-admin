@@ -1,9 +1,12 @@
 package com.admin.base.service.impl;
 
+import com.admin.base.dao.UserMapper;
 import com.admin.base.domain.User;
 import com.admin.base.service.UserService;
 import com.admin.base.util.PageResult;
 import com.admin.base.util.QueryVo;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.beetl.sql.core.SQLManager;
 import org.beetl.sql.core.annotatoin.Param;
 import org.beetl.sql.core.engine.PageQuery;
@@ -25,7 +28,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private SQLManager sqlManager;
+    private UserMapper userMapper;
+
 
     /**
      * 根据主键获取用户
@@ -34,23 +38,22 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public User getUserById(Long id) {
-        return sqlManager.single(User.class, id);
+    public User getUserById(String id) {
+        return userMapper.selectById(id);
     }
 
     @Override
     public List<User> select(String name) {
-        User template = new User();
-        template.setUserName(name);
-        return sqlManager.template(template);
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(User::getUserName, name);
+        return userMapper.selectList(wrapper);
     }
 
     @Override
-    public List<User> selectByDeprtmentId(Long id) {
-        /*return userDao.selectByDepartId(id);*/
-        User template = new User();
-        template.setUserDid(id);
-        return sqlManager.template(template);
+    public List<User> selectByDeprtmentId(String id) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(User::getUserDid, id);
+        return userMapper.selectList(wrapper);
 
     }
 
@@ -60,13 +63,14 @@ public class UserServiceImpl implements UserService {
      * @param vo
      * @return
      */
-    @Override
+   /* @Override
     public PageResult<User> pageUser(User user, QueryVo vo) {
         PageQuery<User> query = new PageQuery<>(vo.getPage(), vo.getLimit());
         query.setParas(user);
         sqlManager.pageQuery("account.user.getUserPage", User.class, query);
         return new PageResult<>(query.getTotalRow(), query.getList());
-    }
+        PageQuery
+    }*/
 
     /**
      * 用户登录校验
@@ -76,9 +80,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User LoginUser(User user) {
-        User single = sqlManager.lambdaQuery(User.class).andEq(User::getUserName, user.getUserName())
-                .andEq(User::getUserPass, user.getUserPass()).single();
-        return single;
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(User::getUserName, user.getUserName()).eq(User::getUserPass, user.getUserPass());
+        return userMapper.selectOne(wrapper);
     }
 
     /**
@@ -87,10 +91,10 @@ public class UserServiceImpl implements UserService {
      * @param userId
      */
     @Override
-    public void restPsw(Long userId) {
-        User template = sqlManager.single(User.class, userId);
-        template.setUserPass("1");
-        sqlManager.updateTemplateById(User.class, template);
+    public void restPsw(String userId) {
+        User user = userMapper.selectById(userId);
+        user.setUserPass("1");
+        userMapper.updateById(user);
     }
 
     /**
@@ -100,10 +104,10 @@ public class UserServiceImpl implements UserService {
      * @param state
      */
     @Override
-    public void updateStatus(Long userId, Integer state) {
-        User template = sqlManager.single(User.class, userId);
-        template.setUserState(state);
-        sqlManager.updateTemplateById(User.class, template);
+    public void updateStatus(String userId, String state) {
+        User user = userMapper.selectById(userId);
+        user.setUserState(state);
+        userMapper.updateById(user);
     }
 
 }

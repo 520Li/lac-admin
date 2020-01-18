@@ -1,5 +1,13 @@
 package com.admin.base.domain;
 
+import com.admin.base.layui.annos.Field;
+import com.admin.base.layui.annos.LayuiTable;
+import com.admin.base.layui.annos.Query;
+import com.admin.base.layui.annos.TableType;
+import com.admin.base.layui.enums.Method;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -10,6 +18,7 @@ import org.beetl.sql.core.annotatoin.Table;
 import org.beetl.sql.core.annotatoin.Version;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * ClassName: Menu <br/>
@@ -22,22 +31,27 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "lac.lw_menu")
+@TableName("menu")
+@LayuiTable(elem = "menu_table")
 public class Menu implements Serializable {
 
 
-    @AssignID("simple")
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long menuId;
+    @TableId(type = IdType.UUID)
+    private String menuId;
+    @Field(title = "菜单名称")
+    @Query(name = "菜单名称", method = Method.LIKE)
     private String menuName;
-    private Long menuParent;
+    private String menuParent;
+    @Field(title = "菜单级别")
+    private String menuLevel;
     private Integer menuSort;
-    @JsonIgnore
-    private Integer menuState;
+    private String menuState;
+    @Field(title = "菜单url")
     private String menuUrl;
-    @JsonIgnore
-    @Version
-    private Integer menuVersion;
+
+
+    private Date createTime;
+    private Date updateTime;
 
 
 }

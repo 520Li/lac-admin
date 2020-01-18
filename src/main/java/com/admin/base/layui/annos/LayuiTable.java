@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LayuiTable {
     /**
-     * 数据表格id (如果一个页面多个表格需要指定id)
+     * 数据表格id (多个表格需要指定不同的id)
      */
     String elem();
 
@@ -26,6 +26,6 @@ public @interface LayuiTable {
     /**
      * 列头 和 列尾工具栏
      */
-    TableType value();
+    TableType value() default @TableType;
 
 }

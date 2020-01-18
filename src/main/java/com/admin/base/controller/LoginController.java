@@ -1,6 +1,5 @@
 package com.admin.base.controller;
 
-import com.admin.base.domain.Menu;
 import com.admin.base.domain.User;
 import com.admin.base.service.HomeService;
 import com.admin.base.service.UserService;
@@ -13,10 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * ClassName: LoginController <br/>
@@ -63,6 +58,14 @@ public class LoginController {
 
         return "/index.html";
     }
+
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("login_user");
+        return "/login.html";
+    }
+
 
 
 }

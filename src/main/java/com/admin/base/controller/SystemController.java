@@ -43,15 +43,23 @@ public class SystemController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * 公共查询菜单
+     * @param session
+     * @param vid
+     * @param clazz
+     * @param map
+     * @return
+     */
     @GetMapping("")
-    public String toUser(HttpSession session, Long vid, String clazz, ModelMap map) {
+    public String toUser(HttpSession session, String vid, String clazz, ModelMap map) {
         Menu menu = homeService.getMenuById(vid);
         map.put("menuId", vid);
         map.put("menu", menu.getMenuName());
         map.put("clazz", clazz);
 
         //获取用户权限按钮
-        List<Resource> list = commonService.getResourceByUser(vid);
+        List<Resource> list = homeService.getResourceByUser(vid);
         List<String> resources = list.stream().map(Resource::getResourceName).collect(Collectors.toList());
         map.put("resources", resources);
 
@@ -75,14 +83,14 @@ public class SystemController {
 
     @PostMapping("/restPsw.do")
     @ResponseBody
-    public PageResult restPsw(Long userId) {
+    public PageResult restPsw(String userId) {
         userService.restPsw(userId);
         return new PageResult(200, "重置密码成功");
     }
 
     @PostMapping("/updateState.do")
     @ResponseBody
-    public PageResult updateState(Long id, Integer state, String clazz) throws Exception {
+    public PageResult updateState(String id, String state, String clazz) throws Exception {
         commonService.updateStatus(id, state, clazz);
         return new PageResult(200, "更新状态成功");
     }

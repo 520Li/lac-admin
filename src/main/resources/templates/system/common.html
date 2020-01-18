@@ -14,9 +14,12 @@
             <!-- 获取查询项 -->
             @QueryTag(clazz){}
 
+            @if(array.contain(resources,'search')){
             <button id="user-btn-search" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
-            <button id="user-btn-add" class="layui-btn icon-btn" lay-tips="新用户密码为1"><i class="layui-icon">&#xe654;</i>添加
-            </button>
+            @}
+            @if(array.contain(resources,'add')){
+            <button id="user-btn-add" class="layui-btn icon-btn" lay-tips="新用户密码为1"><i class="layui-icon">&#xe654;</i>添加</button>
+            @}
         </div>
 
         <table class="layui-table" id="${map.tableId}" lay-filter="${map.tableId}"></table>
@@ -57,23 +60,7 @@
 
         // 渲染表格
         table.render(${map.data});
-        /*table.render({
-            elem: '#user-table',
-            url: 'system/user/list.do',
-            page: true,
-            cols: [[
-                {type: 'numbers'},
-                {field: 'userName', sort: true, title: '账号'},
-                {field: 'userNickname', sort: true, title: '用户名'},
-                {
-                    sort: true, templet: function (d) {
-                        return util.toDateString(d.userCreateTime);
-                    }, title: '创建时间'
-                },
-                {field: 'userState', sort: true, templet: '#user-tpl-state', title: '状态'},
-                {align: 'center', toolbar: '#user-table-bar', title: '操作'}
-            ]]
-        });*/
+
 
         // 添加按钮点击事件
         $('#user-btn-add').click(function () {
@@ -89,7 +76,7 @@
             if (layEvent === 'edit') { // 修改
                 showEditModel(data);
             } else if (layEvent === 'reset') { // 重置密码
-                layer.confirm('确定重置此用户的密码吗？', function (i) {
+                layer.confirm('确定重置密码吗？', function (i) {
                     layer.close(i);
                     layer.load(2);
                     $.post('system/common/restPsw.do', {
@@ -134,7 +121,7 @@
             layer.load(2);
             $.post('system/common/updateState.do?clazz=${clazz}', {
                 id: obj.elem.value,
-                state: obj.elem.checked ? 0 : 1
+                state: obj.elem.checked ? '01' : '02'
             }, function (data) {
                 console.log(data);
                 layer.closeAll('loading');

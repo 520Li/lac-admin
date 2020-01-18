@@ -1,5 +1,6 @@
 package com.admin.base.beetl.fun;
 
+import com.admin.base.dao.MenuMapper;
 import com.admin.base.domain.Menu;
 import com.admin.base.domain.Role;
 import com.admin.base.domain.User;
@@ -30,9 +31,9 @@ import java.util.stream.Collectors;
 @Component
 public class MenuFunction implements Function {
     @Autowired
-    private SQLManager sqlManager;
-    @Autowired
     private HttpSession session;
+    @Autowired
+    private MenuMapper menuMapper;
 
     //菜单缓存
     private static Map<String, Object> map = new HashMap<>();
@@ -46,18 +47,19 @@ public class MenuFunction implements Function {
      */
     @Override
     public Object call(Object[] paras, Context ctx) {
-        Long id = Long.parseLong(paras[0] + "");
+        String id = paras[0] + "";
         //TODO 获取用户权限菜单
         User user = (User) session.getAttribute("login_user");
+        String userId = user.getUserId();
         //获取用户菜单
-        List<Menu> menus = (List<Menu>) map.get("menus");
+        List<Menu> menus = (List<Menu>) map.get(userId);
         if (menus == null) {
-            menus = sqlManager.select("account.common.getMenusByUser", Menu.class, user);
-            map.put("menus", menus);
+            menus = menuMapper.getMenusByUser(userId);
+            map.put(userId, menus);
         }
 
         menus = menus.stream()
-                .filter((info) -> info.getMenuParent() == id)
+                .filter((info) -> info.getMenuParent().equals(id))
                 .collect(Collectors.toList());
 
         /*List<Menu> menus = sqlManager.lambdaQuery(Menu.class)

@@ -2,6 +2,7 @@ package com.admin.base.service;
 
 
 import com.admin.base.domain.Menu;
+import com.admin.base.domain.Resource;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface HomeService {
 
     List<Menu> getMenus();
 
-    Menu getMenuById(Long id);
+    Menu getMenuById(String id);
+
+    List<Resource> getResourceByUser(String vid);
 }

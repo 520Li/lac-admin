@@ -4,6 +4,10 @@ import com.admin.base.layui.annos.Field;
 import com.admin.base.layui.annos.LayuiTable;
 import com.admin.base.layui.annos.Query;
 import com.admin.base.layui.annos.TableType;
+import com.admin.base.layui.enums.Method;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -20,20 +24,29 @@ import java.util.Date;
  * @date 2019/9/7 0007 - 10:38
  */
 @Data
-@Table(name = "lac.lw_role")
-@LayuiTable(elem = "role_table", value = @TableType(toolbarId = "role_toolbar"))
+@TableName("role")
+@LayuiTable(elem = "role_table", value = @TableType(toolbar = true))
 public class Role {
 
-    @AssignID("simple")
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long roleId;
+    @TableId(type = IdType.UUID)
+    private String roleId;
 
+<<<<<<< HEAD
     @Field("角色名称")
     @Query(name = "角色名称")
     private String roleName;
 
     @Field("创建时间")
     private Date roleCreateTime;
+=======
+    @Field(title = "角色名称")
+    @Query(name = "角色名称",method = Method.LIKE)
+    private String roleName;
 
-    private Integer roleVersion;
+    @Field(title = "创建时间")
+    private Date createTime;
+
+    private Date updateTime;
+>>>>>>> 2a12ffbf9ff4dcef15a466388f0a15eed7307196
+
 }

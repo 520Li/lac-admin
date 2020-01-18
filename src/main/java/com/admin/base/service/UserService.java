@@ -15,17 +15,17 @@ import java.util.List;
  */
 public interface UserService {
 
-    public User getUserById(Long id);
+    public User getUserById(String id);
 
     public List<User> select(String name);
 
-    public List<User> selectByDeprtmentId(Long id);
+    public List<User> selectByDeprtmentId(String id);
 
-    public PageResult<User> pageUser(User template, QueryVo vo);
+    //public PageResult<User> pageUser(User template, QueryVo vo);
 
     public User LoginUser(User user);
 
-    void restPsw(Long userId);
+    void restPsw(String userId);
 
-    void updateStatus(Long userId, Integer state);
+    void updateStatus(String userId, String state);
 }

@@ -73,27 +73,27 @@ public class Layui {
         private String type;
 
         /**
-         * 列字段（与实体类对应）
+         * column字段（与实体类对应）
          */
         private String field;
 
         /**
-         * 列标题
+         * column标题
          */
         private String title;
 
         /**
-         * 列尾工具栏属性
+         * toolbar工具栏属性
          */
         private String align;
 
         /**
-         * 工具栏id
+         * toolbar工具栏id
          */
         private String toolbar;
 
         /**
-         * 列模板
+         * column模板
          */
         private String templet;
 

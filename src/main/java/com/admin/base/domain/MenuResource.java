@@ -1,5 +1,8 @@
 package com.admin.base.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -16,18 +19,16 @@ import java.util.Date;
  * @date 2019/9/7 0007 - 12:25
  */
 @Data
-@Table(name = "lac.lw_menu_resource")
+@TableName("menu_resource")
 public class MenuResource {
 
-    @AssignID("simple")
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long mrId;
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long mrMenuId;
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long mrResourceId;
-    private Date mrCreateTime;
-    private Integer mrVersion;
+    @TableId(type = IdType.UUID)
+    private String mrId;
+    private String menuId;
+    private String resourceId;
+
+    private Date createTime;
+    private Date updateTime;
 
 
 }

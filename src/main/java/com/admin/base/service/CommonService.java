@@ -12,7 +12,7 @@ public interface CommonService {
 
     public PageResult getCommonPage(QueryVo vo) throws Exception;
 
-    void updateStatus(Long id, Integer state, String clazz) throws Exception;
+    void updateStatus(String id, String state, String clazz) throws Exception;
 
-    List<Resource> getResourceByUser(Long vid);
+
 }
